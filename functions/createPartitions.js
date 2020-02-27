@@ -15,14 +15,15 @@ exports.handler = async (event, context, callback) => {
   var hour = nextHour.getUTCHours().toString().padStart(2, '0');
   console.log('Creating Partition', { year, month, day, hour });
 
-  var createPartitionStatement = `
-    ALTER TABLE ${database}.${table}
-    ADD IF NOT EXISTS 
-    PARTITION (
-        year = '${year}',
-        month = '${month}',
-        day = '${day}',
-        hour = '${hour}' );`;
+  var createPartitionStatement = `ALTER TABLE ${database}.waf_partitioned_gz ADD IF NOT EXISTS  PARTITION (year = '${year}', month = '${month}', day = '${day}', hour = '${hour}' );`;
+
+  await util.runQuery(createPartitionStatement);
+
+  var createPartitionStatement = `ALTER TABLE ${database}.cf_partitioned_gz ADD IF NOT EXISTS  PARTITION (year = '${year}', month = '${month}', day = '${day}', hour = '${hour}' );`;
+
+  await util.runQuery(createPartitionStatement);
+
+  var createPartitionStatement = `ALTER TABLE ${database}.apig_partitioned_gz ADD IF NOT EXISTS  PARTITION (year = '${year}', month = '${month}', day = '${day}', hour = '${hour}' );`;
 
   await util.runQuery(createPartitionStatement);
 }

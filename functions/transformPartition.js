@@ -18,13 +18,39 @@ exports.handler = async (event, context, callback) => {
   console.log('Transforming Partition', { year, month, day, hour });
 
   var ctasStatement = `
-    INSERT INTO ${database}.${targetTable}
+    INSERT INTO ${database}.waf_partitioned_parquet
     SELECT *
-    FROM ${database}.${sourceTable}
+    FROM ${database}.waf_partitioned_gz
     WHERE year = '${year}'
         AND month = '${month}'
         AND day = '${day}'
         AND hour = '${hour}';`;
 
   await util.runQuery(ctasStatement);
+  
+  var ctasStatement2 = `
+    INSERT INTO ${database}.cf_partitioned_parquet
+    SELECT *
+    FROM ${database}.cf_partitioned_gz
+    WHERE year = '${year}'
+        AND month = '${month}'
+        AND day = '${day}'
+        AND hour = '${hour}';`;
+
+  await util.runQuery(ctasStatement2);
+  
+  var ctasStatement3 = `
+    INSERT INTO ${database}.apig_partitioned_parquet
+    SELECT *
+    FROM ${database}.apig_partitioned_gz
+    WHERE year = '${year}'
+        AND month = '${month}'
+        AND day = '${day}'
+        AND hour = '${hour}';`;
+
+  await util.runQuery(ctasStatement3);
+  console.log('Transformed ',ctasStatement);
+  console.log('Transformed ',ctasStatement2);
+  console.log('Transformed ',ctasStatement3);
+ 
 }
