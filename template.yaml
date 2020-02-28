@@ -339,7 +339,7 @@ Resources:
             InputFormat: org.apache.hadoop.mapred.TextInputFormat
             Location: !Sub "s3://weblogs-${AWS::AccountId}-${Region}/waf-partitioned-gz"
             SerdeInfo:
-              Parameters: {paths: 'action,formatVersion,httpRequest,httpSourceId,httpSourceName,nonTerminatingMatchingRules,rateBasedRuleList,ruleGroupList,terminatingRuleId,terminatingRuleMatchDetails,terminatingRuleType,timestamp,webaclId'}
+              Parameters: {paths: 'timestamp,action,formatVersion,httpRequest,httpSourceId,httpSourceName,nonTerminatingMatchingRules,rateBasedRuleList,ruleGroupList,terminatingRuleId,terminatingRuleMatchDetails,terminatingRuleType,timestamp,webaclId'}
               SerializationLibrary: org.openx.data.jsonserde.JsonSerDe
     WAFPartitionedParquetTable:
       Type: AWS::Glue::Table
