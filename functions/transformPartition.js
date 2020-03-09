@@ -19,7 +19,22 @@ exports.handler = async (event, context, callback) => {
 
   var ctasStatement = `
     INSERT INTO ${database}.waf_partitioned_parquet
-    SELECT *
+    SELECT timestamp,
+         formatversion,
+         webaclid,
+         terminatingruleid,
+         terminatingruletype,
+         action,
+         array_join(terminatingrulematchdetails,' eee ') as terminatingrulematchdetails, 
+         httpsourcename, 
+         httpsourceid, 
+         array_join(ratebasedrulelist,' eee ') as ratebasedrulelist, 
+         array_join(nonterminatingmatchingrules,' eee ') as nonterminatingmatchingrules, 
+         httprequest, 
+         year, 
+         month, 
+         day, 
+         hour
     FROM ${database}.waf_partitioned_gz
     WHERE year = '${year}'
         AND month = '${month}'
