@@ -376,17 +376,15 @@ Resources:
             - Name: action
               Type: string
             - Name: terminatingrulematchdetails
-              Type: array<string>
+              Type: string
             - Name: httpsourcename
               Type: string
             - Name: httpsourceid
               Type: string
-            - Name: rulegrouplist
-              Type: array<struct<rulegroupid:string,terminatingrule:string,nonterminatingmatchingrules:array<string>,excludedrules:string>>
             - Name: ratebasedrulelist
-              Type: array<string>
+              Type: string
             - Name: nonterminatingmatchingrules
-              Type: array<string>
+              Type: string
             - Name: httprequest
               Type: struct<clientip:string,country:string,headers:array<struct<name:string,value:string>>,uri:string,args:string,httpversion:string,httpmethod:string,requestid:string>
             InputFormat: org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat
