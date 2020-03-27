@@ -56,6 +56,19 @@ exports.handler = async (event, context, callback) => {
       
       const copy = s3.copyObject(copyParams).promise();
 
+      if (typer == "waf") {
+        const targetwazuhKey = `${typer}-wazuh/${year}/${month}/${day}/${hour}/${filename}`;
+        console.log(`Copying ${sourceKey} to ${targetwazuhKey}.`);
+
+        const copywazuhParams = {
+          CopySource: bucket + '/' + sourceKey,
+          Bucket: bucket,
+          Key: targetwazuhKey
+        };
+      
+        const copywazuh = s3.copyObject(copywazuhParams).promise();
+      }
+      
       const deleteParams = { Bucket: bucket, Key: sourceKey };
 
       return copy.then(function () {
