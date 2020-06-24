@@ -10,14 +10,6 @@ Description: >
     Athena and AWS Glue).
 
 Parameters:
-  ResourcePrefix: 
-    Type: String
-    Default: 'weblogs'
-    ConstraintDescription: '[a-z0-9]+/'
-    MinLength: 1
-    MaxLength: 20
-    Description: >
-        Prefix that is used for the created resources (20 chars, a-z and 0-9 only)
   GlueDatabase: 
     Type: String
     Default: 'weblogs'
