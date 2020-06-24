@@ -93,3 +93,11 @@ See the [Contributing Guidelines](https://github.com/aws-samples/amazon-cloudfro
 ## License Summary
 
 This sample code is made available under a modified MIT license. See the [LICENSE](https://github.com/aws-samples/amazon-cloudfront-access-logs-queries/blob/master/LICENSE) file.
+
+
+
+
+sam package --profile producao --region sa-east-2 --template-file template.yaml --output-template-file packaged.yaml --s3-bucket prod-samapps-7327-343113194914-sa-east-1
+
+
+aws cloudformation deploy --profile producao --region sa-east-2 --template-file packaged.yaml --stack-name weblogs --capabilities CAPABILITY_IAM
