@@ -57,12 +57,12 @@ Resources:
                   Action:
                     - s3:ListBucket
                     - s3:GetBucketLocation
-                  Resource: !Sub "arn:aws:s3:::weblogs-${AWS::AccountId}-${Region}"
+                  Resource: !Sub "arn:aws:s3:::weblogs-63853-${AWS::AccountId}-${Region}"
                 - Effect: Allow
                   Action:
                     - s3:PutObject
                     - s3:GetObject
-                  Resource: !Sub "arn:aws:s3:::weblogs-${AWS::AccountId}-${Region}/*"
+                  Resource: !Sub "arn:aws:s3:::weblogs-63853-${AWS::AccountId}-${Region}/*"
                 - Effect: Allow
                   Action:
                     - glue:CreatePartition
@@ -80,7 +80,7 @@ Resources:
                     #SOURCE_TABLE: !Ref PartitionedGzTable
                     #TARGET_TABLE: !Ref PartitionedParquetTable
                     DATABASE: !Ref CfLogsDatabase
-                    ATHENA_QUERY_RESULTS_LOCATION: !Sub "s3://weblogs-${AWS::AccountId}-${Region}/athena-query-results"
+                    ATHENA_QUERY_RESULTS_LOCATION: !Sub "s3://weblogs-63853-${AWS::AccountId}-${Region}/athena-query-results"
             Events:
               HourlyEvt:
                 Type: Schedule
@@ -105,11 +105,11 @@ Resources:
                   Action:
                     - s3:ListBucket
                     - s3:GetBucketLocation
-                  Resource: !Sub "arn:aws:s3:::weblogs-${AWS::AccountId}-${Region}"
+                  Resource: !Sub "arn:aws:s3:::weblogs-63853-${AWS::AccountId}-${Region}"
                 - Effect: Allow
                   Action:
                     - s3:PutObject
-                  Resource: !Sub "arn:aws:s3:::weblogs-${AWS::AccountId}-${Region}/*"
+                  Resource: !Sub "arn:aws:s3:::weblogs-63853-${AWS::AccountId}-${Region}/*"
                 - Effect: Allow
                   Action:
                     - glue:CreatePartition
@@ -121,7 +121,7 @@ Resources:
                 Variables:
                     #TABLE: !Ref PartitionedGzTable
                     DATABASE: !Ref CfLogsDatabase
-                    ATHENA_QUERY_RESULTS_LOCATION: !Sub "s3://weblogs-${AWS::AccountId}-${Region}/athena-query-results"
+                    ATHENA_QUERY_RESULTS_LOCATION: !Sub "s3://weblogs-63853-${AWS::AccountId}-${Region}/athena-query-results"
             Events:
               HourlyEvt:
                 Type: Schedule
@@ -141,11 +141,11 @@ Resources:
                   Action:
                     - s3:GetObject
                     - s3:DeleteObject
-                  Resource: !Sub "arn:aws:s3:::weblogs-${AWS::AccountId}-${Region}/*"
+                  Resource: !Sub "arn:aws:s3:::weblogs-63853-${AWS::AccountId}-${Region}/*"
                 - Effect: Allow
                   Action:
                     - s3:PutObject
-                  Resource: !Sub "arn:aws:s3:::weblogs-${AWS::AccountId}-${Region}/*"
+                  Resource: !Sub "arn:aws:s3:::weblogs-63853-${AWS::AccountId}-${Region}/*"
             Events:
                 AccessLogsUploadedEvent:
                     Type: S3
@@ -161,7 +161,7 @@ Resources:
         Type: "AWS::S3::Bucket"
         Description: "Bucket for Amazon WEB logs"
         Properties:
-            BucketName: !Sub "weblogs-${AWS::AccountId}-${Region}"
+            BucketName: !Sub "weblogs-63853-${AWS::AccountId}-${Region}"
             
 # Glue Resources
 # - Database
@@ -228,7 +228,7 @@ Resources:
             - Name: responseLatency
               Type: string
             InputFormat: org.apache.hadoop.mapred.TextInputFormat
-            Location: !Sub "s3://weblogs-${AWS::AccountId}-${Region}/apig-partitioned-gz"
+            Location: !Sub "s3://weblogs-63853-${AWS::AccountId}-${Region}/apig-partitioned-gz"
             SerdeInfo:
               Parameters: {paths: 'authorizer.integrationLatency,caller,httpMethod,integrationLatency,integrationStatus,ip,protocol,requestId,requestTime,resourcePath,responseLatency,responseLength,status,user'}
               SerializationLibrary: org.openx.data.jsonserde.JsonSerDe   
@@ -283,7 +283,7 @@ Resources:
             - Name: responseLatency
               Type: string
             InputFormat: org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat
-            Location: !Sub "s3://weblogs-${AWS::AccountId}-${Region}/apig-partitioned-parquet"
+            Location: !Sub "s3://weblogs-63853-${AWS::AccountId}-${Region}/apig-partitioned-parquet"
             SerdeInfo:
               SerializationLibrary: org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe
 
@@ -337,7 +337,7 @@ Resources:
             - Name: httprequest
               Type: struct<clientip:string,country:string,headers:array<struct<name:string,value:string>>,uri:string,args:string,httpversion:string,httpmethod:string,requestid:string>
             InputFormat: org.apache.hadoop.mapred.TextInputFormat
-            Location: !Sub "s3://weblogs-${AWS::AccountId}-${Region}/waf-partitioned-gz"
+            Location: !Sub "s3://weblogs-63853-${AWS::AccountId}-${Region}/waf-partitioned-gz"
             SerdeInfo:
               Parameters: {paths: 'timestamp,action,formatVersion,httpRequest,httpSourceId,httpSourceName,nonTerminatingMatchingRules,rateBasedRuleList,ruleGroupList,terminatingRuleId,terminatingRuleMatchDetails,terminatingRuleType,timestamp,webaclId'}
               SerializationLibrary: org.openx.data.jsonserde.JsonSerDe
@@ -388,7 +388,7 @@ Resources:
             - Name: httprequest
               Type: struct<clientip:string,country:string,headers:array<struct<name:string,value:string>>,uri:string,args:string,httpversion:string,httpmethod:string,requestid:string>
             InputFormat: org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat
-            Location: !Sub "s3://weblogs-${AWS::AccountId}-${Region}/waf-partitioned-parquet"
+            Location: !Sub "s3://weblogs-63853-${AWS::AccountId}-${Region}/waf-partitioned-parquet"
             SerdeInfo:
               SerializationLibrary: org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe
 
@@ -482,7 +482,7 @@ Resources:
             - Name: sc_range_end
               Type: bigint
             InputFormat: org.apache.hadoop.mapred.TextInputFormat
-            Location: !Sub "s3://weblogs-${AWS::AccountId}-${Region}/cf-partitioned-gz"
+            Location: !Sub "s3://weblogs-63853-${AWS::AccountId}-${Region}/cf-partitioned-gz"
             SerdeInfo:
               Parameters:
                 field.delim": "\t"
@@ -577,6 +577,6 @@ Resources:
             - Name: sc_range_end
               Type: bigint
             InputFormat: org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat
-            Location: !Sub "s3://weblogs-${AWS::AccountId}-${Region}/cf-partitioned-parquet"
+            Location: !Sub "s3://weblogs-63853-${AWS::AccountId}-${Region}/cf-partitioned-parquet"
             SerdeInfo:
               SerializationLibrary: org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe    
